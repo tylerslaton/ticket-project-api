@@ -1,0 +1,26 @@
+{
+  "name": "ticket-project-api",
+  "version": "0.0.1",
+  "description": "Backend API for the ticket project",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tylerslaton/ticket-project-api.git"
+  },
+  "author": "Tyler Slaton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tylerslaton/ticket-project-api/issues"
+  },
+  "homepage": "https://github.com/tylerslaton/ticket-project-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
