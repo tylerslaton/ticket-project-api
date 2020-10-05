@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       AuthToken.belongsTo(models.User);
     }
   };
-  // generates a random 15 character token and
-  // associates it with a user
+  // TODO: Found this from a tutorial, we can probably do something better here. Right now,
+  //       it generates a fairly small auth token. Maybe passport.js?
   AuthToken.generate = async function(UserId) {
     if (!UserId) {
       throw new Error('AuthToken requires a user ID')
@@ -23,9 +23,10 @@ module.exports = (sequelize, DataTypes) => {
 
     let token = '';
 
+    // Generate a token with the specified characters are random
     const possibleCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
       'abcdefghijklmnopqrstuvwxyz0123456789';
-
+      
     for (var i = 0; i < 15; i++) {
       token += possibleCharacters.charAt(
         Math.floor(Math.random() * possibleCharacters.length)
