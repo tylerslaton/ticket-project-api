@@ -61,7 +61,8 @@ router.delete('/logout', async (req, res) => {
     // authorization we should have access to the user
     // on the req object, so we will try to find it and
     // call the model method logout
-    const { user, cookies: { auth_token: authToken } } = req
+    const { user } = req
+    const authToken = req.headers.authorization
 
     // we only want to attempt a logout if the user is
     // present in the req object, meaning it already

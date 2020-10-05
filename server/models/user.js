@@ -21,7 +21,6 @@ module.exports = (sequelize, DataTypes) => {
   // the User model prototype. This can be found in the
   // sequelize documentation
   User.prototype.authorize = async function () {
-    console.log("beep")
     const { AuthToken } = sequelize.models;
     const user = this
 
@@ -30,15 +29,16 @@ module.exports = (sequelize, DataTypes) => {
     // and passing it the user id
     const authToken = await AuthToken.generate(this.id);
 
-    console.log("zoop")
-
     // addAuthToken is a generated method provided by
     // sequelize which is made for any 'hasMany' relationships
     await user.addAuthToken(authToken);
 
-    console.log("zeep")
-
     return { user, authToken }
+  };
+
+  User.prototype.logout = async function (token) {
+    // destroy the auth token record that matches the passed token
+    sequelize.models.AuthToken.destroy({ where: { token } });
   };
 
   User.authenticate = async function(username, password) {
@@ -48,12 +48,12 @@ module.exports = (sequelize, DataTypes) => {
     // store strings on the database rather than the raw
     // passwords. Check out the docs for more detail
     if (bcrypt.compareSync(password, user.password)) {
-      console.log("hello")
       return user.authorize();
     }
 
     throw new Error('invalid password');
   }
+  
 
   User.init({
     email: {

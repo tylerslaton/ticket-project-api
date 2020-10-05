@@ -1,32 +1,25 @@
 // External packages
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 
 // Internal packages
-const routes = require('./routes/routes.js')
+const routes = require('./routes/routes')
+const customMiddleware = require('./middleware/middleware')
 const db = require('./models/index');
 
+// Express config
 const app = express()
 const port = 3000
 
-// // Middleware
+// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser())
+app.use(customMiddleware.auth)
 
+// Routes
 app.use('/user', routes.user)
-
-// // index route
-// app.get('/', routes.index.index)
-
-// // sample routes
-// app.get('/sample', routes.sample.getAll)
-// app.post('/sample', routes.sample.post)
-
-// // sample/:id routes
-// app.get('/sample/:id', routes.sample.get)
-// app.put('/sample/:id', routes.sample.update)
-// app.delete('/sample/:id', routes.sample.remove)
-
 
 // sync our sequelize models and then start server
 // force: true will wipe our database on each server restart
