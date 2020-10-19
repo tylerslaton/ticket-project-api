@@ -2,9 +2,12 @@
   "name": "ticket-project-api",
   "version": "0.0.1",
   "description": "Backend API for the ticket project",
-  "main": "app.js",
+  "main": "server/app.js",
   "directories": {
     "lib": "lib"
+  },
+  "engines": {
+    "node": "10.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -27,5 +30,8 @@
     "express": "^4.17.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.3.5"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0"
   }
 }
