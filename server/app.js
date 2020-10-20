@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 
 // Internal packages
-const routes = require('./routes/routes')
+const routes = require('./routes')
 const customMiddleware = require('./middleware/middleware')
 const db = require('./models/index');
 
@@ -19,7 +19,7 @@ app.use(cookieParser())
 app.use(customMiddleware.auth)
 
 // Routes
-app.use('/user', routes.user)
+app.use(routes);
 
 // sync our sequelize models and then start server
 // force: true will wipe our database on each server restart
