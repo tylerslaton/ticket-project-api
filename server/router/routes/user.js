@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 
 const router = express.Router();
-const { User } = require('../models');
+const { User } = require('../../models');
 
 // Register Route
 router.post('/register', async (req, res) => {
@@ -76,8 +76,24 @@ router.delete('/logout', async (req, res) => {
     );
 });
 
+// Update Route
+router.put('/me', async (req, res) => {
+    if (req.user) {
+        await AuthToken.findOne(
+            { where: { token }, include: User }
+        )
+
+        console.log(req.user)
+    }
+
+    // Improve error handling here
+    res.status(404).send(
+        { errors: [{ message: 'missing auth token' }] }
+      );
+});
+
 // Me Route
-router.get('/me', (req, res) => {
+router.get('/me', async (req, res) => {
     if (req.user) {
       return res.send(req.user);
     }

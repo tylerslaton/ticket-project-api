@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "example",
-    "database": "custom_auth_tutorial",
+    "database": "ticket_api_local",
     "host": "0.0.0.0",
     "dialect": "mysql"
   },
