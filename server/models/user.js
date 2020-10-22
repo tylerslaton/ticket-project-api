@@ -45,7 +45,15 @@ module.exports = (sequelize, DataTypes) => {
   // Custom function to handle authentication. Takes a username and password
   // and attempts to find a user that matches it. 
   User.authenticate = async function(username, password) {
+    console.log(username, password);
     const user = await User.findOne({ where: { username } });
+
+    // Make sure that a user is found
+    if( !user ){
+      throw new Error('no user found');
+    }
+
+    console.log(user);
 
     // Once we find a user, compare the sent value with the store
     // encrypted value. Ensures no one ever has access to the real
