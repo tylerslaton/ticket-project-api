@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 
 const router = express.Router();
-const { User } = require('../models');
+const { User } = require('../../models');
 
 // Register Route
 router.post('/register', async (req, res) => {
@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
         let data = await user.authorize();
 
         // Respond with the auth token
-        return res.json(data);
+        return res.status(201).json(data);
   
     } catch(err) {
         // Handles if a password was not sent
@@ -76,14 +76,71 @@ router.delete('/logout', async (req, res) => {
     );
 });
 
+// Update Route
+router.put('/me', async (req, res) => {
+    // Get the user from request
+    const { user } = req
+    const authToken = req.headers.authorization
+
+    // If there is a user sent in from the middleware and an auth is in the header, logout
+    if (user && authToken) {
+        validInfo = extractInfo(req.body);
+        if ( validInfo ) {
+            userFound = await User.findOne({ where: { username: user.dataValues.username } })
+            if ( userFound ){
+                userFound.update(validInfo);
+            }
+        }
+        console.log(validInfo)
+        // If we update the password, let's reauthenticate
+        if (validInfo.password) {
+            let data = await User.authenticate(validInfo.username, validInfo.rawPassword)
+            return res.status(204).json(data);
+        } else {
+            return 
+        }
+        return res.status(204);
+    }
+
+    // Improve error handling here
+    res.status(404).send(
+        { errors: [{ message: 'missing valid auth token' }] }
+      );
+});
+
 // Me Route
-router.get('/me', (req, res) => {
+router.get('/me', async (req, res) => {
     if (req.user) {
-      return res.send(req.user);
+        return res.send(req.user);
     }
     res.status(404).send(
-      { errors: [{ message: 'missing auth token' }] }
+        { errors: [{ message: 'missing auth token' }] }
     );
-  });
+});
+
+const extractInfo = (body) => {
+    newInfo = {}
+    // Find username
+    if( body.username )
+        newInfo.username = body.username;
+
+    // Find email
+    if( body.email ) 
+        newInfo.email= body.email;
+
+    // Find and hash password
+    if( body.password ) {
+        // Raw password for generating a new token after update
+        newInfo.rawPassword = password = body.password
+        // Hashed password updating in the DB
+        newInfo.password = bcrypt.hashSync(body.password, 10);;
+    }
+
+    // If nothing is set, set to false
+    if ( newInfo == {} )
+        newInfo = false;
+
+    return newInfo;
+}
 
 module.exports = router;

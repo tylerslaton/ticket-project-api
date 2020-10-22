@@ -11,6 +11,7 @@ services:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: ticket_api_local
     ports:
       - 3306:3306
       - 33060:33060
