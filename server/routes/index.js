@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-// Get method
+// Just an example route, can basically ignore unless you need an example.
 router.get = (req, res) => {
     testPL = {
         message: "Hello, world!"

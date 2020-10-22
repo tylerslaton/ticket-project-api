@@ -10,18 +10,20 @@ router.post('/register', async (req, res) => {
         // Hash password
         const hash = bcrypt.hashSync(req.body.password, 10);
 
-        // Create a new password from the hash
+        // Create a new password from the hash and the body of the 
+        // request
         let user = await User.create(
             Object.assign(req.body, { password: hash })
         );
 
-        // Give the user an auth token to use
+        // Give the user an auth token to use.
         let data = await user.authorize();
 
         // Respond with the auth token
         return res.json(data);
   
     } catch(err) {
+        // Handles if a password was not sent
         if ( !req.body.password){
             err = {
                 "error": "request did not send a password"
@@ -36,14 +38,15 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
   
-    // if the username / password is missing, we use status code 400
-    // indicating a bad request was made and send back a message
+    // Validate that both a username and password is sent. If they aren't,
+    // send a 400
     if (!username || !password) {
         return res.status(400).send(
             'Request missing username or password param'
         );
     }
   
+    // Try to authenticate the user with the sent values and catch any exceptions
     try {
         let user =  await User.authenticate(username, password)
 
@@ -57,25 +60,17 @@ router.post('/login', async (req, res) => {
 
 // Logout Route
 router.delete('/logout', async (req, res) => {
-    // because the logout request needs to be send with
-    // authorization we should have access to the user
-    // on the req object, so we will try to find it and
-    // call the model method logout
+    // Get the user from request
     const { user } = req
     const authToken = req.headers.authorization
 
-    // we only want to attempt a logout if the user is
-    // present in the req object, meaning it already
-    // passed the authentication middleware. There is no reason
-    // the authToken should be missing at this point, check anyway
+    // If there is a user sent in from the middleware and an auth is in the header, logout
     if (user && authToken) {
         await req.user.logout(authToken);
         return res.status(204).send()
     }
 
-    // if the user missing, the user is not logged in, hence we
-    // use status code 400 indicating a bad request was made
-    // and send back a message
+    // If there is not a user or auth token, send a 400
     return res.status(400).send(
         { errors: [{ message: 'not authenticated' }] }
     );
