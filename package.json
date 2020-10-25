@@ -11,10 +11,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./scripts/start.sh",
-    "stop": "./scripts/stop.sh",
-    "restart": "npm stop && npm start",
-    "start:local": "nodemon server/app.js"
+    "start:db": "./scripts/start.sh",
+    "stop:db": "./scripts/stop.sh",
+    "restart:db": "npm stop:db && npm start:db",
+    "start": "nodemon server/app.js"
   },
   "repository": {
     "type": "git",
