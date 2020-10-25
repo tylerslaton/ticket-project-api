@@ -1,24 +1,27 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 
 const router = express.Router();
 const { Venue } = require('../../models');
+
+/*
+    NOTE: We should come back to this file and add some authentication to be able to do these. 
+*/
 
 // Create Route
 router.post('/', async (req, res) => {
     try {
         // Create the venue with the supplied data
-        let venue = await Venue.create(
-            req.body
-        );
+        let venue = await Venue.create( req.body );
 
         // Respond with a 201
         return res.status(201).json(venue);
   
     } catch(err) {
-
-        // If an error occurs, respond with a 400 error. Always blame it on the user B)
-        return res.status(400).send(err);
+        // If an error occurs, log it and respond with a 500.
+        console.log(err)
+        res.status(500).send(
+            { errors: [{ message: 'internal error occured' }] }
+        );
     }
 });
 
@@ -38,8 +41,11 @@ router.get('/:id', async (req, res) => {
         return res.status(404).send()
 
     } catch(err) {
-        // If an error occurs, respond with a 400 error. Always blame it on the user B)
-        return res.status(400).send(err);
+        // If an error occurs, log it and respond with a 500.
+        console.log(err)
+        res.status(500).send(
+            { errors: [{ message: 'internal error occured' }] }
+        );
     }    
 });
 
@@ -61,9 +67,11 @@ router.put('/:id', async (req, res) => {
         return res.status(400).send('did not send a body with the request')
 
     } catch(err) {
-        console.log(err);
-        // If an error occurs, respond with a 400 error. Always blame it on the user B)
-        return res.status(400).send(err);
+        // If an error occurs, log it and respond with a 500.
+        console.log(err)
+        res.status(500).send(
+            { errors: [{ message: 'internal error occured' }] }
+        );
     }    
 });
 
@@ -80,8 +88,11 @@ router.delete('/:id', async (req, res) => {
         return res.status(status).send();
 
     } catch(err) {
-        // If an error occurs, respond with a 400 error. Always blame it on the user B)
-        return res.status(400).send(err);
+        // If an error occurs, log it and respond with a 500.
+        console.log(err)
+        res.status(500).send(
+            { errors: [{ message: 'internal error occured' }] }
+        );
     }    
 });
 

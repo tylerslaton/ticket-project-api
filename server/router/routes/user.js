@@ -104,7 +104,7 @@ router.put('/me', async (req, res) => {
     // Improve error handling here
     res.status(404).send(
         { errors: [{ message: 'missing valid auth token' }] }
-      );
+    );
 });
 
 // Me Route
