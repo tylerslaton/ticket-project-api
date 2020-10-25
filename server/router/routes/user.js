@@ -113,7 +113,7 @@ router.get('/me', async (req, res) => {
         return res.send(req.user);
     }
     res.status(404).send(
-        { errors: [{ message: 'missing auth token' }] }
+        { errors: [{ message: 'missing valid auth token' }] }
     );
 });
 

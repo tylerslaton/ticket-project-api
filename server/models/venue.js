@@ -14,12 +14,30 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Venue.init({
-    name: DataTypes.STRING,
-    city: DataTypes.STRING,
-    state: DataTypes.STRING,
-    country: DataTypes.STRING,
-    zip: DataTypes.INTEGER,
-    address1: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    zip: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    address1: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     address2: DataTypes.STRING
   }, {
     sequelize,

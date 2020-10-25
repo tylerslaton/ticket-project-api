@@ -19,8 +19,12 @@ router.post('/', async (req, res) => {
     } catch(err) {
         // If an error occurs, log it and respond with a 500.
         console.log(err)
-        res.status(500).send(
-            { errors: [{ message: 'internal error occured' }] }
+
+        // Check to see if we have a validation error from sequelize. If not,
+        // go ahead and return a 500. Otherwise, a 400. 
+        validationError = err.name == 'SequelizeValidationError';
+        res.status(validationError ? 400 : 500).send(
+            { errors: [{ message: `error occured: ${err}`}] }
         );
     }
 });
@@ -44,7 +48,7 @@ router.get('/:id', async (req, res) => {
         // If an error occurs, log it and respond with a 500.
         console.log(err)
         res.status(500).send(
-            { errors: [{ message: 'internal error occured' }] }
+            { errors: [{ message: `error occured: ${err}` }] }
         );
     }    
 });
@@ -70,7 +74,7 @@ router.put('/:id', async (req, res) => {
         // If an error occurs, log it and respond with a 500.
         console.log(err)
         res.status(500).send(
-            { errors: [{ message: 'internal error occured' }] }
+            { errors: [{ message: `error occured: ${err}` }] }
         );
     }    
 });
@@ -91,7 +95,7 @@ router.delete('/:id', async (req, res) => {
         // If an error occurs, log it and respond with a 500.
         console.log(err)
         res.status(500).send(
-            { errors: [{ message: 'internal error occured' }] }
+            { errors: [{ message: `error occured: ${err}` }] }
         );
     }    
 });
