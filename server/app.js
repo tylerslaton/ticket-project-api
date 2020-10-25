@@ -19,8 +19,9 @@ app.use(cookieParser())
 app.use(customMiddleware.auth)
 
 // Routes
-app.use('/user', router.user);
 app.use('/', router.index)
+app.use('/user', router.user);
+app.use('/venue', router.venue)
 app.use('/sample', router.sample)
 
 // sync our sequelize models and then start server

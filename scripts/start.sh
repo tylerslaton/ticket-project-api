@@ -5,7 +5,7 @@ if [ $? -ne 0 ]; then
   echo "DB is not up, starting now...\n"
   docker-compose up -d
   echo "\nWaiting for DB to be ready...\n"
-  sleep 15s
+  sleep 20s
   echo "DB is ready, starting server!\n"
 else
   echo "DB is already started!\n"
