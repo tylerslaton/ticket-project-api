@@ -11,11 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      
     }
   };
   Venue.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    city: DataTypes.STRING,
+    state: DataTypes.STRING,
+    country: DataTypes.STRING,
+    zip: DataTypes.INTEGER,
+    address1: DataTypes.STRING,
+    address2: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Venue',

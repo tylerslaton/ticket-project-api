@@ -91,21 +91,20 @@ router.put('/me', async (req, res) => {
                 userFound.update(validInfo);
             }
         }
-        console.log(validInfo)
+
         // If we update the password, let's reauthenticate
         if (validInfo.password) {
             let data = await User.authenticate(validInfo.username, validInfo.rawPassword)
             return res.status(204).json(data);
         } else {
-            return 
+            return
         }
-        return res.status(204);
     }
 
     // Improve error handling here
     res.status(404).send(
         { errors: [{ message: 'missing valid auth token' }] }
-      );
+    );
 });
 
 // Me Route
