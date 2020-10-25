@@ -23,6 +23,7 @@ app.use('/', router.index)
 app.use('/user', router.user);
 app.use('/venue', router.venue)
 app.use('/sample', router.sample)
+app.use('/event', router.event);
 
 // sync our sequelize models and then start server
 // force: true will wipe our database on each server restart

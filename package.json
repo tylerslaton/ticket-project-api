@@ -13,7 +13,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "./scripts/start.sh",
     "stop": "./scripts/stop.sh",
-    "restart": "npm stop && npm start"
+    "restart": "npm stop && npm start",
+    "start:local": "nodemon server/app.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mysql2": "^2.2.5",
+    "nodemon": "^2.0.6",
     "sequelize": "^6.3.5"
   },
   "devDependencies": {
