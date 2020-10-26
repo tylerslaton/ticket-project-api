@@ -10,6 +10,3 @@ if [ $? -ne 0 ]; then
 else
   echo "DB is already started!\n"
 fi
-
-# Start up the app
-node server/app.js

@@ -11,9 +11,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./scripts/start.sh",
-    "stop": "./scripts/stop.sh",
-    "restart": "npm stop && npm start"
+    "start:db": "./scripts/start.sh",
+    "stop:db": "./scripts/stop.sh",
+    "restart:db": "npm stop:db && npm start:db",
+    "start": "nodemon server/app.js"
   },
   "repository": {
     "type": "git",
@@ -29,8 +30,10 @@
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mysql2": "^2.2.5",
+    "nodemon": "^2.0.6",
     "sequelize": "^6.3.5"
   },
   "devDependencies": {
